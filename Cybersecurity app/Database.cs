@@ -13,6 +13,10 @@ namespace Cybersecurity_app
     {
         private string stringConnection = "Cyber_App_DB.sqlite3";
 
+
+        /// <summary>
+        /// The constructor will create the database if there is no database
+        /// </summary>
         public Database()
         {
             if (!File.Exists(stringConnection))
@@ -23,18 +27,31 @@ namespace Cybersecurity_app
 
         }
 
+        /// <summary>
+        /// Create DB connection
+        /// </summary>
+        /// <returns></returns>
         private SQLiteConnection GetConnection()
         {
-            return new SQLiteConnection(stringConnection);
+            return new SQLiteConnection($"Data source = {stringConnection}");
         }
 
-
+        /// <summary>
+        /// Create database model
+        /// </summary>
+        /// <returns>Query to create users table</returns>
         private string CreateDbModel()
         {
-            string tableUser = "CREATE TABLE IF NOT EXISTS users ([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [first_name] TEXT, [last_name] TEXT, [email] TEXT, [password] TEXT)";
+            string tableUser = "CREATE TABLE IF NOT EXISTS users([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [first_name] TEXT, [last_name] TEXT, [email] TEXT, [password] TEXT)";
             return tableUser;
         }
 
+        /// <summary>
+        /// Query reader for database with parameters
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="sqlParameters"></param>
+        /// <returns></returns>
         public DataTable QueryReader(string query, Action<SQLiteParameterCollection> sqlParameters)
         {
             DataTable restul = new DataTable();
@@ -49,6 +66,11 @@ namespace Cybersecurity_app
             return restul;
         }
 
+        /// <summary>
+        /// Query reader for database with no parameters
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public DataTable QueryReader(string query)
         {
             DataTable restul = new DataTable();
@@ -62,6 +84,11 @@ namespace Cybersecurity_app
             return restul;
         }
 
+        /// <summary>
+        /// Non query for database with parameters
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="sqlParameters"></param>
         public void NonQuery(string query, Action<SQLiteParameterCollection> sqlParameters)
         {
             using (SQLiteConnection myConnection = GetConnection())
@@ -73,6 +100,10 @@ namespace Cybersecurity_app
             }
         }
 
+        /// <summary>
+        /// Non query for database with no parameters
+        /// </summary>
+        /// <param name="query"></param>
         public void NonQuery(string query)
         {
             using (SQLiteConnection myConnection = GetConnection())

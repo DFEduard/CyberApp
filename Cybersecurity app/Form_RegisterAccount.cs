@@ -12,9 +12,46 @@ namespace Cybersecurity_app
 {
     public partial class Form_RegisterAccount : Form
     {
+        PasswordChecker passwordChecker;
+
+        string[] specialCharacters = {"!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","}","[","]",";",":","'","\"","|","?",@"/","~","`","£","<",">" };
+
+
         public Form_RegisterAccount()
         {
             InitializeComponent();
+        }
+        private void Form_RegisterAccount_Load(object sender, EventArgs e)
+        {
+            passwordChecker = new PasswordChecker();
+            
+        }
+
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+
+        public void PasswordChecker(string password)
+        {
+            if (password.Length <= 4)
+            {
+                lblPasswordMsg.Text = "Weak";
+            }
+
+            if(password.Length >= 8)
+            {
+                if (password.Contains(""))
+
+                lblPasswordMsg.Text = "Medium";
+            }
+        }
+
+        private void btnCreateAccount_Click(object sender, EventArgs e)
+        {
+            passwordChecker.StrenghtCalculator(txtPassword.Text);
+            MessageBox.Show(passwordChecker.GetScorePercent().ToString());
         }
     }
 }

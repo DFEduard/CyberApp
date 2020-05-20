@@ -23,5 +23,16 @@ namespace Cybersecurity_app
         {
             db = new Database();
         }
+
+        private void btnCreateAccount_Click(object sender, EventArgs e)
+        {
+            using (Form_RegisterAccount createAccount = new Form_RegisterAccount())
+            {
+                if (createAccount.ShowDialog() == DialogResult.OK)
+                {
+
+                }
+            }
+        }
     }
 }
