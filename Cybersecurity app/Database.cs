@@ -12,6 +12,15 @@ namespace Cybersecurity_app
     public class Database
     {
         private string stringConnection = "Cyber_App_DB.sqlite3";
+        private bool sqlInjectionAttack = false;
+
+        private string[] sqlInjectionChecker = { "create", "select", "update", "insert", "drop", "table", "beign", "end", "alter",
+                                          "cursor","delete","cast","exec","kill","fetch","sysobject","syscolumns","execute",
+                                          "--",";--",";","/*","*/","char","@","vchar","nvarchar","@@", "if not exist", "values(",
+                                           "delete from", "set", "create table", "'", "*", "from"};
+
+
+
 
 
         /// <summary>
@@ -22,7 +31,7 @@ namespace Cybersecurity_app
             if (!File.Exists(stringConnection))
             {
                 SQLiteConnection.CreateFile(stringConnection);
-                NonQuery(CreateDbModel());   
+                CreateDbModel();
             }
 
         }
@@ -40,10 +49,14 @@ namespace Cybersecurity_app
         /// Create database model
         /// </summary>
         /// <returns>Query to create users table</returns>
-        private string CreateDbModel()
+        private void CreateDbModel()
         {
-            string tableUser = "CREATE TABLE IF NOT EXISTS users([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [first_name] TEXT, [last_name] TEXT, [email] TEXT, [password] TEXT)";
-            return tableUser;
+            string createTableUser = "CREATE TABLE IF NOT EXISTS users([ID] INTEGER PRIMARY KEY AUTOINCREMENT, [first_name] TEXT, [last_name] TEXT, [email] TEXT, [password] TEXT, [two_factor_authentication] BOOL)";
+            string createTableUniqueCodes = "CREATE TABLE IF NOT EXISTS unique_codes([ID] INTEGER PRIMARY KEY AUTOINCREMENT,[user_id] INTEGER, [code] TEXT, [time] real, FOREIGN KEY (user_id) REFERENCES users(id))";
+
+            NonQuery(createTableUser);
+            NonQuery(createTableUniqueCodes);
+
         }
 
         /// <summary>
@@ -88,17 +101,24 @@ namespace Cybersecurity_app
         /// Non query for database with parameters
         /// </summary>
         /// <param name="query"></param>
-        /// <param name="sqlParameters"></param>
-        public void NonQuery(string query, Action<SQLiteParameterCollection> sqlParameters)
+        /// <param name="sqliteParameters"></param>
+        public void NonQuery(string query, Action<SQLiteParameterCollection> sqliteParameters)
         {
             using (SQLiteConnection myConnection = GetConnection())
             using (SQLiteCommand command = new SQLiteCommand(query, myConnection))
             {
-                myConnection.Open();
-                command.ExecuteNonQuery();
-                myConnection.Close();
+                if (!sqlInjectionAttack)
+                {
+                    myConnection.Open();
+                    sqliteParameters(command.Parameters);
+                    command.ExecuteNonQuery();
+                    myConnection.Close();
+                }
+
             }
         }
+   
+
 
         /// <summary>
         /// Non query for database with no parameters
@@ -115,6 +135,38 @@ namespace Cybersecurity_app
             }
         }
 
+        public bool CheckSqlInjection(string input)
+        {
+            string[] splitInput = input.Split(' ');
+            string resultInput = "";
+            
 
+            for (int i = 0; i < splitInput.Length; i++)
+            {
+                if (sqlInjectionChecker.Contains(splitInput[i].ToLower()))
+                {
+                    if (i == 0)
+                    {
+                        resultInput = splitInput[i];
+                    }
+                    else if (i > 0)
+                    {
+                        resultInput += " " + splitInput[i];
+                    }
+                }
+                
+            }
+
+            if (resultInput.Length >= 2)
+            {
+                sqlInjectionAttack = true;
+            }
+            else
+            {
+                sqlInjectionAttack = false;
+            }
+            
+            return sqlInjectionAttack;
+        }
     }
 }

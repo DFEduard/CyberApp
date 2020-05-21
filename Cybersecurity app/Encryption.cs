@@ -10,14 +10,7 @@ namespace Cybersecurity_app
 {
     public class Encryption
     {
-        private string key;
-
-        public string Key { get => key; set => key = value; }
-
-        public Encryption(string key)
-        {
-            Key = key;
-        }
+        protected string key = "basdf23h2h235hkjhhj235jhop2765sd";
 
 
         public string EncryptData(string plainText)

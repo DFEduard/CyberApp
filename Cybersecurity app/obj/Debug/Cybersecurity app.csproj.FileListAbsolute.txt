@@ -24,3 +24,4 @@ C:\Users\dfedu\Google Drive\University Year 3\Sem 2\CET234 Cyber Security\PPW2\C
 C:\Users\dfedu\Google Drive\University Year 3\Sem 2\CET234 Cyber Security\PPW2\Cybersecurity app\Cybersecurity app\bin\Debug\Security.Cryptography.dll
 C:\Users\dfedu\Google Drive\University Year 3\Sem 2\CET234 Cyber Security\PPW2\Cybersecurity app\Cybersecurity app\bin\Debug\Security.Cryptography.pdb
 C:\Users\dfedu\Google Drive\University Year 3\Sem 2\CET234 Cyber Security\PPW2\Cybersecurity app\Cybersecurity app\bin\Debug\Security.Cryptography.xml
+C:\Users\dfedu\Google Drive\University Year 3\Sem 2\CET234 Cyber Security\PPW2\Cybersecurity app\Cybersecurity app\obj\Debug\Cybersecurity_app.Form_MultiFactorAuthentication.resources
