@@ -3,6 +3,39 @@ using System.Collections.Generic;
 
 namespace Cybersecurity_app
 {
+
+    /// <summary>
+    /// Class: Encryption
+    /// Write by: Florentin Eduard Decu
+    /// Description: This class can be used to check the password. Password will be measured and a score will be given
+    /// Score info:
+    ///     Positive score 
+    ///     1. Number of characters         | Logic: number of characters * 4
+    ///     2. Uppercase Letters            | Logic: (number of characters - number of uppercase letters) * 2
+    ///     3. Lowercase Letters            | Logic: (number of characters - number of lowercase letters) * 2
+    ///     4. Numbers                      | Logic: number of digits * 4
+    ///     5. Symbols                      | Logic: number of symbols * 6
+    ///     6. Middle Numbers or Symbols    | Logic: number of middle symbols or digits * 2
+    ///     7. Requirements                 | Logic: numbers of requirements * 2              
+    ///        Requirements: 7.1. Password must be minimum 8 characters in lenght 
+    ///                      7.2. At least one uppercase letter
+    ///                      7.3. At least one lowercase letter
+    ///                      7.4. At lest one digit
+    ///                      7.5. At least one symbol 
+    ///     Negative score
+    ///     1. Letters only                     | Logic: the total number of the postive score minus total number of letter characters
+    ///     2. Numbers only                     | Logic: the total number of the postive score minus total number of digits characters
+    ///     3. Repeated characters              | Logic: the total number of the postive score minus the total number of repeated characters
+    ///     4. Consecutive uppercase letters    | Logic: the total number of consecutive characters * 2 (e.g. ABCDEF = 4 characters, first and last are not take in consideration)
+    ///     5. Consecutive lowercase letters    | Logic: the total number of consecutive characters * 2 (e.g. abcdef = 4 characters, first and last are not take in consideration)
+    ///     6. Consecutive numbers              | Logic: the total number of consecutive numbers *2 (e.g. 123456 = 4 characters, first and last are not take in consideration)
+    ///     7. Sequential letters               | Logic: the total number of sequential letters * 3 (e.g. 12abc23def = 2, ab and c result 1, de and f result 1, total = 2)
+    ///     8. Sequential numerbs               | Logic: the total number of sequnetial numbers * 3 (e.g. ab123de456 = 2, 12 and 3 result 1, 45 and 6 result 1, total = 2)
+    ///     9. Sequential symbols               | Logic: the total number of sequential symbols * 3 (e.g. 1a!@#2b$%^ = 2, !@ and # result 1, $% and ^ result 1, total = 2)
+    ///     
+    ///     Final score = total of the postive score - total of the negative score 
+    ///                   
+    /// </summary>
     public class PasswordChecker
     {
         //Store the total score
@@ -668,9 +701,12 @@ namespace Cybersecurity_app
             CalculateFinalScore();
         }
 
-
+        /// <summary>
+        /// Calculate the final score of the password 
+        /// </summary>
         private void CalculateFinalScore()
         {
+            //Calculate the total score from postitive score - negative score
             score = noOfCharactersScore + upperLettersScore + lowerLettersScore + numbersScore + symbolsScore + middleNumbersOrSymbolsScore + requirementsScore
                     - lettersOnlyScore - numbersOnlyScore - repeatCharactersScore- consecutiveUpperCaseLettersScore - consecutiveLowerCaseLettersScore - consecutiveNumbersScore 
                     - sequentialLettersScore - sequentialNumbersScore - sequentialSymbolsScore;           
@@ -730,7 +766,7 @@ namespace Cybersecurity_app
         }
 
         /// <summary>
-        /// Score: 0-49 Very Week | 50-59 Weak | 60-79 OK | 80-89 Strong | 100-above Very Strong
+        /// Returns the score of the password in percentage
         /// </summary>
         /// <returns></returns>
         public double GetScorePercent()
@@ -747,13 +783,17 @@ namespace Cybersecurity_app
             return score;
         }
 
+        // <summary>
+        /// Score: 0-39 Very Weak | 40-69 Medium | 70-100 Strong 
+        /// </summary>
+        /// <returns></returns>
         public string GetScoreString()
         {
             string result = "";
-            
+
             if (score < 40)
             {
-                result = "Week";
+                result = "Weak";
             }
             else if (score >= 40 && score < 70)
             {
@@ -763,7 +803,6 @@ namespace Cybersecurity_app
             {
                 result = "Strong";
             }
-
             return result;
         }
 

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_MultiFactorAuthentication));
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblMsg = new System.Windows.Forms.Label();
             this.txtUniqueCode = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnActivate = new System.Windows.Forms.Button();
@@ -47,15 +47,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Multi Factor Authentication ";
             // 
-            // label2
+            // lblMsg
             // 
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(314, 103);
-            this.label2.TabIndex = 1;
-            this.label2.Text = resources.GetString("label2.Text");
+            this.lblMsg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblMsg.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMsg.Location = new System.Drawing.Point(12, 58);
+            this.lblMsg.Name = "lblMsg";
+            this.lblMsg.Size = new System.Drawing.Size(314, 103);
+            this.lblMsg.TabIndex = 1;
+            this.lblMsg.Text = resources.GetString("lblMsg.Text");
             // 
             // txtUniqueCode
             // 
@@ -105,11 +105,12 @@
             this.Controls.Add(this.btnActivate);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtUniqueCode);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.lblMsg);
             this.Controls.Add(this.label1);
             this.Name = "Form_MultiFactorAuthentication";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form_MultiFactorAuthentication";
+            this.Load += new System.EventHandler(this.Form_MultiFactorAuthentication_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,7 +119,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblMsg;
         private System.Windows.Forms.TextBox txtUniqueCode;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnActivate;

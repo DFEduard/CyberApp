@@ -10,9 +10,10 @@ namespace Cybersecurity_app
 {
     public class EmailServices
     {
-        protected string email = ;
-        protected string password = ;
+        protected string email = "XHD / H1s3Ol09KT6DA0bFwaIIfFGn1NpmZ3ej63p5RFU3KhfIRGO30ewEQfLG + PgU";
+        protected string password = "8VNhfzNFsEbwZC4Fr//9XbDnok8GFXkhRuS1pz+phfA=";
         protected SmtpClient smtpClient;
+        private Encryption encryption = new Encryption();
 
         public EmailServices()
         {
@@ -23,17 +24,18 @@ namespace Cybersecurity_app
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(email,password),
+                Credentials = new NetworkCredential(encryption.DecryptData(email),encryption.DecryptData(password)),
                 Timeout = 20000
             };
         }
 
-        public void SendEmail(string toEmail)
+        public void SendEmail(string toEmail,string message)
         {
-            using (var msg = new MailMessage(email, toEmail))
+            using (var msg = new MailMessage(encryption.DecryptData(email),toEmail))
             {
-                msg.Subject = "CODE";
-                msg.Body = "TESTING";
+                msg.Subject = "Multi Factor Authentication NO REPLY";
+                msg.IsBodyHtml = true;
+                msg.Body = "Your unique code is: <h1>"+message+"</h1>";
 
                 smtpClient.Send(msg);
             }

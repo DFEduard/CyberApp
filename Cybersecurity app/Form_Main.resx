@@ -117,7 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="lblMsg.Text" xml:space="preserve">
-    <value>You activated the multi-factor-authentication. An email with an unique code has been sent  to your email account. Please type in the below text box the unique code to active this option. If you close this window this option will be disable</value>
-  </data>
 </root>

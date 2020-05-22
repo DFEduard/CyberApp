@@ -546,9 +546,10 @@
             // chkMoreAnalysis
             // 
             this.chkMoreAnalysis.AutoSize = true;
+            this.chkMoreAnalysis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkMoreAnalysis.Location = new System.Drawing.Point(78, 248);
             this.chkMoreAnalysis.Name = "chkMoreAnalysis";
-            this.chkMoreAnalysis.Size = new System.Drawing.Size(115, 17);
+            this.chkMoreAnalysis.Size = new System.Drawing.Size(133, 17);
             this.chkMoreAnalysis.TabIndex = 17;
             this.chkMoreAnalysis.Text = "View more analysis";
             this.chkMoreAnalysis.UseVisualStyleBackColor = true;
@@ -559,9 +560,9 @@
             this.chkTwoFactorAuth.AutoSize = true;
             this.chkTwoFactorAuth.Location = new System.Drawing.Point(77, 347);
             this.chkTwoFactorAuth.Name = "chkTwoFactorAuth";
-            this.chkTwoFactorAuth.Size = new System.Drawing.Size(169, 17);
+            this.chkTwoFactorAuth.Size = new System.Drawing.Size(166, 17);
             this.chkTwoFactorAuth.TabIndex = 18;
-            this.chkTwoFactorAuth.Text = "Use multi-factor authentication";
+            this.chkTwoFactorAuth.Text = "Use multifactor authentication";
             this.chkTwoFactorAuth.UseVisualStyleBackColor = true;
             this.chkTwoFactorAuth.Click += new System.EventHandler(this.chkTwoFactorAuth_Click);
             // 

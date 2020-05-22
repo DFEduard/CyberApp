@@ -61,7 +61,7 @@ namespace Cybersecurity_app
             //Clear message
             lblMsgEmail.Text = "";
 
-            btnCreateAccount.DialogResult = DialogResult.OK;
+            //btnCreateAccount.DialogResult = DialogResult.OK;
 
         }
 
@@ -80,53 +80,73 @@ namespace Cybersecurity_app
                 //Check sql injection validation (false means is ok)
                 if (!SqlInjectionDetected())
                 {
-
+                    //Check if the email is valid 
                     if (emailChecker.ValidEmailAddress)
                     {
+                        //Check if the password meet all the minimum requirements
                         if (passwordChecker.TotalNoOfRequirements == 5)
                         {
-                            try
+
+                            if (txtPassword.Text == txtConfirmPass.Text)
                             {
-                                //Store user data (user data will be encrypted)
-                                firstName = encryption.EncryptData(txtFirstName.Text);
-                                lastName = encryption.EncryptData(txtLastName.Text);
-                                email = encryption.EncryptData(txtEmail.Text);
-                                password = encryption.EncryptData(txtPassword.Text);
 
-                                //Create user object
-                                User = new User(firstName, lastName, email, password);
+                                string query = "SELECT email FROM users WHERE email = @email";
 
-                                //Create query to save user data into database
-                                string query = "INSERT INTO [users] (first_name, last_name, email, password, two_factor_authentication) VALUES (@firstName, @lastName, @email, @password, @twoFactorAuthentication)";
-
-                                //Query database and add user data as parameters
-                                db.NonQuery(query, p =>
+                                DataTable table = db.QueryReader(query, p => 
                                 {
-                                    p.Add("@firstName", DbType.String).Value = firstName;
-                                    p.Add("@lastName", DbType.String).Value = lastName;
-                                    p.Add("@email", DbType.String).Value = email;
-                                    p.Add("@password", DbType.String).Value = password;
+                                    p.Add("@email", DbType.String).Value = encryption.EncryptData(txtEmail.Text);
 
-                                    if (MultiFactorAuthentication)
-                                    {
-                                        p.Add("@twoFactorAuthentication", DbType.Boolean).Value = true;
-                                    }
-                                    else
-                                    {
-                                        p.Add("@twoFactorAuthentication", DbType.Boolean).Value = false;
-                                    }
                                 });
 
-                                MessageBox.Show("The account has been succesfully created", "Account", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                if (table.Rows.Count == 0)
+                                {
+                                    //Store user data (user data will be encrypted)
+                                    firstName = encryption.EncryptData(txtFirstName.Text);
+                                    lastName = encryption.EncryptData(txtLastName.Text);
+                                    email = encryption.EncryptData(txtEmail.Text);
+                                    password = encryption.EncryptData(txtPassword.Text);
 
-                                DialogResult = DialogResult.OK;
+                                    //Create user object
+                                    User = new User(firstName, lastName, email, password, MultiFactorAuthentication);
+
+                                    //Create query to save user data into database
+                                    query = "INSERT INTO [users] (first_name, last_name, email, password, two_factor_authentication) " +
+                                        "VALUES (@firstName, @lastName, @email, @password, @twoFactorAuthentication)";
+
+                                    //Query database and add user data as parameters
+                                    db.NonQuery(query, p =>
+                                    {
+                                        p.Add("@firstName", DbType.String).Value = firstName;
+                                        p.Add("@lastName", DbType.String).Value = lastName;
+                                        p.Add("@email", DbType.String).Value = email;
+                                        p.Add("@password", DbType.String).Value = password;
+
+                                        if (MultiFactorAuthentication)
+                                        {
+                                            p.Add("@twoFactorAuthentication", DbType.Boolean).Value = true;
+                                        }
+                                        else
+                                        {
+                                            p.Add("@twoFactorAuthentication", DbType.Boolean).Value = false;
+                                        }
+                                    });
+
+                                    MessageBox.Show("The account has been succesfully created", "Account", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    DialogResult = DialogResult.OK;
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Email is already registered. Please use a different email!");
+                                }
+
                                 
                             }
-                            catch(SQLiteException ex)
+                            else
                             {
-                                MessageBox.Show("Something went wrong!");
+                                MessageBox.Show("Confirmation password is not mathing");
                             }
-                           
+ 
                         }
                         else
                         {
