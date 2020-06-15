@@ -10,8 +10,8 @@ namespace Cybersecurity_app
 {
     public class EmailServices
     {
-        protected string email = "XHD / H1s3Ol09KT6DA0bFwaIIfFGn1NpmZ3ej63p5RFU3KhfIRGO30ewEQfLG + PgU";
-        protected string password = "8VNhfzNFsEbwZC4Fr//9XbDnok8GFXkhRuS1pz+phfA=";
+        protected string email = "";
+        protected string password = "";
         protected SmtpClient smtpClient;
         private Encryption encryption = new Encryption();
 
