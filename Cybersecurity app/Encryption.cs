@@ -16,7 +16,7 @@ namespace Cybersecurity_app
     public class Encryption
     {
         //Key used to encrypt and decrypt data 
-        protected string key = "basdf23h2h235hkjhhj235jhop2765sd";
+        protected string key = "-";
 
         /// <summary>
         /// Parameterless constructor 
